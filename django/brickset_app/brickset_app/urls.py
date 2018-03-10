@@ -19,8 +19,8 @@ from item.views import home
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', home, name='home'),
-    #url(r'^polls/', include(polls.urls)),
-    url(r'^blog/', include('blog.urls')),
+    #url(r'^$', home, name='home'),
+    #url(r'^blog/', include('blog.urls')),
+    url(r'^$', include('blog.urls')),
 
 ]

@@ -8,12 +8,6 @@
     <div id="app"></div>
     <script type="text/jsx">
 
-     const numbers = [1, 2, 3, 4, 5];
-     const listItems = numbers.map((number) =>
-         <li>{number}</li>
-     );
-
-
      // 親：<Parent />の定義
      var Parent = React.createClass({
        // State（※状態は親が管理）
@@ -96,7 +90,6 @@
 		   if ({textVal} = 'apple') {
 			return (
 	       		   <div>
-			     <ul>{listItems}</ul>
 			     <ul>
                  		<li>this is a baked apple.(これは焼きリンゴだ)</li>
                  		<li>An apple is round in shape.(りんごの形は丸い。)</li>

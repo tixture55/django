@@ -1,5 +1,14 @@
-# -*- coding: utf-8 -*-
+
 from __future__ import unicode_literals
+
+# -*- coding: utf-8 -*-
+import io
+import os
+from django.conf import settings
+from django.views import generic
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 from django.shortcuts import render
 

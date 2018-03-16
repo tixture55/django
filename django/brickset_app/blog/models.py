@@ -20,3 +20,12 @@ class Hello(models.Model):
 
     def __str__(self):
         return "<{0}>".format(self.your_name)
+
+
+class Question(models.Model):
+    title = models.CharField(max_length=100)
+    text = models.CharField(max_length=1000)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    
+    def was_published_recently(self):
+        return self.pub_date >= timezone.now() - datetime.timedelta(days=1)

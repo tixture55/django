@@ -16,6 +16,8 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from item.views import home
+admin.autodiscover()
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

@@ -8,8 +8,134 @@
     <title>{% block title %}My books{% endblock %}</title>
     <!-- Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://fb.me/react-0.13.3.js"></script>
+    <script src="http://fb.me/JSXTransformer-0.13.3.js"></script>
   </head>
   <body>
+    <div id="app"></div>
+    <script type="text/jsx">
+
+     const numbers = [1, 2, 3, 4, 5];
+     const listItems = numbers.map((number) =>
+         <li>{number}</li>
+     );
+
+
+     // 親：<Parent />の定義
+     var Parent = React.createClass({
+       // State（※状態は親が管理）
+       // この値はブラウザを閉じたり、リロードするまでは保持される
+
+       getInitialState: function () {
+         return {
+           textVal: "",
+           children: []
+         };
+       },
+
+       // State(textVal)を変更
+       setStateTextVal: function(textVal) {
+         this.setState({ textVal: textVal }); 
+       },
+
+       // State(children)を変更
+       setStateChildren: function(textVal) {
+         var textVals = this.state.children.concat(textVal);
+         this.setState({ children: textVals });
+       },
+
+       // <Parent />の表示
+       // ここで子となる<ChildInput />と<Child />を記述
+       render: function() {
+         return (
+           <div>
+             <p>入力してEnterキーを押す</p>
+             <ChildInput onChange={this.setStateTextVal} onSave={this.setStateChildren} />
+             <Child textVal={this.state.textVal} children={this.state.children} />
+           </div>
+         );
+       }
+     });
+
+     // 子1：<ChildInput />の定義（※props経由で親を参照できる）
+     var ChildInput = React.createClass({
+       _onChange: function (e) {
+         this.props.onChange(e.target.value);
+       },
+
+       _onKeyDown: function (e) {
+         if (e.keyCode === 13) { // Enterキー
+           this.props.onSave(e.target.value);
+           e.target.value = "";
+         }
+       },
+
+       // <ChildInput />の表示
+       render: function() {
+         return (
+             <div>
+		<p>
+                りんごは英語で？:
+		<input type="text" ref="myText" name="text1" onChange={this._onChange} onKeyDown={this._onKeyDown} />
+                </p>
+		<input type="text" name="text2" onChange={this._onChange} onKeyDown={this._onKeyDown} />
+             </div>   
+         )
+       }
+     });
+
+     // 子2：<Child />の定義（※ props経由で親を参照できる）
+     var Child = React.createClass({
+       // <Child />の表示
+       render: function() {
+         var key = 0;
+         var textVals = this.props.children.map(function (textVal) {
+           // 時間が同じ。つまり、キーが押されるごとに、まとめて再描画されていることに注目
+           //（サーバーサイドっぽいと言われる所以）
+           var date = new Date().toString();
+           
+	   return (
+	     <div className="shopping-list">
+               <h1>用例リスト</h1>
+               
+
+	        {(() => {
+		   if ({textVal} = 'apple') {
+			return (
+	       		   <div>
+			     <ul>{listItems}</ul>
+			     <ul>
+                 		<li>this is a baked apple.(これは焼きリンゴだ)</li>
+                 		<li>An apple is round in shape.(りんごの形は丸い。)</li>
+                 		<li>The apple fell from the tree.(りんごが木から落ちた。)</li>
+               		     </ul>
+			   </div>	
+			);
+                   }
+		})()}
+                {(() => {
+                
+           		return <li key={key++}>{key}.{textVal}({date})</li>;
+
+		})()}
+             </div>	 
+
+	   );
+         });
+
+         return (
+           <div>
+             <p>{this.props.textVal}</p>
+             <ul>{textVals}</ul>
+           </div>
+         );
+       }
+     });
+
+     // id='app' に <Parent />を表示する（マウント）
+     var m = React.render(<Parent />, document.getElementById('app'));
+    </script>
+  </body>
     <div class="container">
       {% block content %}
         {{ content }}

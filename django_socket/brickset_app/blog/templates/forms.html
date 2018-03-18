@@ -1,6 +1,9 @@
 
 {% block body %}
   {{ message }}
+  {{ text_list}}
+  {{request.user }}
+  
   <hr>
   <form method="get" action="">
     {{ form.errors.your_name }}
